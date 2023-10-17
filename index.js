@@ -33,7 +33,47 @@ async function run() {
         res.send(result);
       })
 
+    //   Delete Operation
+    //   app.delete('/coffee/:id', async(req,res) =>{
+    //     let id = req.params.id;
+    //     let quary = {_id: new ObjectId(id)}
+    //     const result = await coffeeCollection.deleteOne(quary);
+    //     res.send(result);
+    //   })
 
+
+    // Update Operation
+    // app.get('/coffee', async(req,res) =>{
+    //     let cursor = coffeeCollection.find()
+    //     let result = await cursor.toArray()
+    //     res.send(result);
+    //   })
+  
+    //   app.get('/coffee/:id', async(req,res) =>{
+    //     let id = req.params.id;
+    //     let quary = {_id: new ObjectId(id)}
+    //     const result = await coffeeCollection.findOne(quary);
+    //     res.send(result);
+    //   })
+    //   app.put('/coffee/:id', async(req,res) =>{
+    //     let id = req.params.id;
+    //     let quary = {_id: new ObjectId(id)}
+    //     const options = { upsert: true };
+    //     let updatedCoffee = req.body;
+    //     let coffee={
+    //       $set:{
+    //         name: updatedCoffee.name,
+    //         chef: updatedCoffee.chef,
+    //         supplier: updatedCoffee.supplier,
+    //         category: updatedCoffee.category,
+    //         taste: updatedCoffee.taste,
+    //         details: updatedCoffee.details,
+    //         photo: updatedCoffee.photo
+    //       }
+    //     }
+    //     const result = await coffeeCollection.updateOne(quary, coffee, options);
+    //     res.send(result);
+    //   })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
