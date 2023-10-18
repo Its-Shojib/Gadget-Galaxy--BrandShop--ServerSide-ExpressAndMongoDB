@@ -2,7 +2,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const express = require('express')
 const cors = require('cors')
 const app = express()
-const port =process.env.PORT || 5000
+const port = process.env.PORT || 5000
 require('dotenv').config()
 
 // Middlewire
@@ -27,11 +27,54 @@ async function run() {
 
     let productCollection = client.db('ProductDB').collection("Products");
 
-    app.post('/product', async(req,res) =>{
-        let newProduct = req.body;
-        const result = await productCollection.insertOne(newProduct);
-        res.send(result);
-      })
+    app.post('/product', async (req, res) => {
+      let newProduct = req.body;
+      const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    })
+
+    // Get data from Apple
+    app.get('/product/apple', async (req, res) => {
+      const query = { "brand": "apple" };
+      let cursor = productCollection.find(query)
+      let result = await cursor.toArray()
+      res.send(result);
+    })
+    // Get data from Google
+    app.get('/product/google', async (req, res) => {
+      const query = { "brand": "google" };
+      let cursor = productCollection.find(query)
+      let result = await cursor.toArray()
+      res.send(result);
+    })
+    // Get data from samsung
+    app.get('/product/samsung', async (req, res) => {
+      const query = { "brand": "samsung" };
+      let cursor = productCollection.find(query)
+      let result = await cursor.toArray()
+      res.send(result);
+    })
+    // Get data from microsoft
+    app.get('/product/microsoft', async (req, res) => {
+      const query = { "brand": "microsoft" };
+      let cursor = productCollection.find(query)
+      let result = await cursor.toArray()
+      res.send(result);
+    })
+    // Get data from oneplus
+    app.get('/product/oneplus', async (req, res) => {
+      const query = { "brand": "oneplus" };
+      let cursor = productCollection.find(query)
+      let result = await cursor.toArray()
+      res.send(result);
+    })
+    // Get data from intel
+    app.get('/product/intel', async (req, res) => {
+      const query = { "brand": "intel" };
+      let cursor = productCollection.find(query)
+      let result = await cursor.toArray()
+      res.send(result);
+    })
 
     //   Delete Operation
     //   app.delete('/coffee/:id', async(req,res) =>{
@@ -48,7 +91,7 @@ async function run() {
     //     let result = await cursor.toArray()
     //     res.send(result);
     //   })
-  
+
     //   app.get('/coffee/:id', async(req,res) =>{
     //     let id = req.params.id;
     //     let quary = {_id: new ObjectId(id)}
