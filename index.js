@@ -27,11 +27,20 @@ async function run() {
 
     let productCollection = client.db('ProductDB').collection("Products");
 
+// Load all data to /product site
+    app.get('/product', async(req,res) =>{
+      let cursor = productCollection.find()
+      let result = await cursor.toArray()
+      res.send(result);
+    })
+
+    // Insert Operatons
     app.post('/product', async (req, res) => {
       let newProduct = req.body;
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     })
+
 
     // Get data from Apple
     app.get('/product/apple', async (req, res) => {
@@ -76,47 +85,32 @@ async function run() {
       res.send(result);
     })
 
-    //   Delete Operation
-    //   app.delete('/coffee/:id', async(req,res) =>{
-    //     let id = req.params.id;
-    //     let quary = {_id: new ObjectId(id)}
-    //     const result = await coffeeCollection.deleteOne(quary);
-    //     res.send(result);
-    //   })
-
-
-    // Update Operation
-    // app.get('/coffee', async(req,res) =>{
-    //     let cursor = coffeeCollection.find()
-    //     let result = await cursor.toArray()
-    //     res.send(result);
-    //   })
-
-    //   app.get('/coffee/:id', async(req,res) =>{
-    //     let id = req.params.id;
-    //     let quary = {_id: new ObjectId(id)}
-    //     const result = await coffeeCollection.findOne(quary);
-    //     res.send(result);
-    //   })
-    //   app.put('/coffee/:id', async(req,res) =>{
-    //     let id = req.params.id;
-    //     let quary = {_id: new ObjectId(id)}
-    //     const options = { upsert: true };
-    //     let updatedCoffee = req.body;
-    //     let coffee={
-    //       $set:{
-    //         name: updatedCoffee.name,
-    //         chef: updatedCoffee.chef,
-    //         supplier: updatedCoffee.supplier,
-    //         category: updatedCoffee.category,
-    //         taste: updatedCoffee.taste,
-    //         details: updatedCoffee.details,
-    //         photo: updatedCoffee.photo
-    //       }
+    // app.get('/product/:id', async (req, res) => {
+    //   let id = req.params.id;
+    //   let query = {_id: new ObjectId(id)}
+    //   let cursor = productCollection.find(query)
+    //   const result = await cursor.toArray()
+    //   res.send(result)
+    // })
+    // app.put('/product/:id', async (req, res) => {
+    //   let id = req.params.id;
+    //   let query = {_id: new ObjectId(id)}
+    //   const options = { upsert: true };
+    //   let updatedProduct = req.body;
+    //   let product = {
+    //     $set: {
+    //       name: updatedProduct.name,
+    //       brand: updatedProduct.brand,
+    //       type: updatedProduct.type,
+    //       price: updatedProduct.price,
+    //       details: updatedProduct.details,
+    //       rating: updatedProduct.rating,
+    //       img: updatedProduct.img
     //     }
-    //     const result = await coffeeCollection.updateOne(quary, coffee, options);
-    //     res.send(result);
-    //   })
+    //   }
+    //   const result = await productCollection.updateOne(query, product, options);
+    //   res.send(result);
+    // })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
