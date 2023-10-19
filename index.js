@@ -124,7 +124,7 @@ async function run() {
     app.get('/cart', async (req, res) => {
       let cursor = cartCollection.find()
       let result = await cursor.toArray()
-      res.send(result);
+      res.send(result); 
     })
 
     // Send a ping to confirm a successful connection
