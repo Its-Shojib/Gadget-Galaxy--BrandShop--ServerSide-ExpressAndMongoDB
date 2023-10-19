@@ -124,8 +124,25 @@ async function run() {
     app.get('/cart', async (req, res) => {
       let cursor = cartCollection.find()
       let result = await cursor.toArray()
-      res.send(result); 
+      res.send(result);
     })
+
+    /*Load data Operatons id wise*/
+    app.get('/cart/:id', async (req, res) => {
+      let id = req.params.id;
+      let query = { _id: new ObjectId(id) }
+      let result = await cartCollection.findOne(query)
+      res.send(result)
+    })
+
+    /*Load data Operatons for cart*/
+    app.delete('/cart/:id', async (req, res) => {
+      let id = req.params.id;
+      let query = { "_id": id };
+      const result = await cartCollection.deleteOne(query);
+      res.send(result);
+    })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
