@@ -26,22 +26,24 @@ async function run() {
     await client.connect();
 
     let productCollection = client.db('ProductDB').collection("Products");
+    let cartCollection = client.db('ProductDB').collection('MyCart')
 
-// Load all data to /product site
-    app.get('/product', async(req,res) =>{
+    /*Load data Operatons for Product*/
+    app.get('/product', async (req, res) => {
       let cursor = productCollection.find()
       let result = await cursor.toArray()
       res.send(result);
     })
 
-    // Insert Operatons
+
+    /*Insert Operatons for Product*/
     app.post('/product', async (req, res) => {
       let newProduct = req.body;
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     })
 
-
+    /*Get Data Operation for Single Brands*/
     // Get data from Apple
     app.get('/product/apple', async (req, res) => {
       const query = { "brand": "apple" };
@@ -85,15 +87,16 @@ async function run() {
       res.send(result);
     })
 
+    /*Update Operation */
     app.get('/product/:id', async (req, res) => {
       let id = req.params.id;
-      let query = {_id: new ObjectId(id)}
+      let query = { _id: new ObjectId(id) }
       let result = await productCollection.findOne(query)
       res.send(result)
     })
     app.put('/product/:id', async (req, res) => {
       let id = req.params.id;
-      let query = {_id: new ObjectId(id)}
+      let query = { _id: new ObjectId(id) }
       const options = { upsert: true };
       let updatedProduct = req.body;
       let product = {
@@ -108,6 +111,19 @@ async function run() {
         }
       }
       const result = await productCollection.updateOne(query, product, options);
+      res.send(result);
+    })
+
+    /*Insert Operatons for My cart*/
+    app.post('/cart', async (req, res) => {
+      let newCart = req.body;
+      const result = await cartCollection.insertOne(newCart);
+      res.send(result);
+    })
+    /*Load data Operatons for cart*/
+    app.get('/cart', async (req, res) => {
+      let cursor = cartCollection.find()
+      let result = await cursor.toArray()
       res.send(result);
     })
 
