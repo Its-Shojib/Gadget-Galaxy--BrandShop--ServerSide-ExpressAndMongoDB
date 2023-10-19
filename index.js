@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express')
 const cors = require('cors')
 const app = express()
@@ -85,32 +85,31 @@ async function run() {
       res.send(result);
     })
 
-    // app.get('/product/:id', async (req, res) => {
-    //   let id = req.params.id;
-    //   let query = {_id: new ObjectId(id)}
-    //   let cursor = productCollection.find(query)
-    //   const result = await cursor.toArray()
-    //   res.send(result)
-    // })
-    // app.put('/product/:id', async (req, res) => {
-    //   let id = req.params.id;
-    //   let query = {_id: new ObjectId(id)}
-    //   const options = { upsert: true };
-    //   let updatedProduct = req.body;
-    //   let product = {
-    //     $set: {
-    //       name: updatedProduct.name,
-    //       brand: updatedProduct.brand,
-    //       type: updatedProduct.type,
-    //       price: updatedProduct.price,
-    //       details: updatedProduct.details,
-    //       rating: updatedProduct.rating,
-    //       img: updatedProduct.img
-    //     }
-    //   }
-    //   const result = await productCollection.updateOne(query, product, options);
-    //   res.send(result);
-    // })
+    app.get('/product/:id', async (req, res) => {
+      let id = req.params.id;
+      let query = {_id: new ObjectId(id)}
+      let result = await productCollection.findOne(query)
+      res.send(result)
+    })
+    app.put('/product/:id', async (req, res) => {
+      let id = req.params.id;
+      let query = {_id: new ObjectId(id)}
+      const options = { upsert: true };
+      let updatedProduct = req.body;
+      let product = {
+        $set: {
+          name: updatedProduct.name,
+          brand: updatedProduct.brand,
+          type: updatedProduct.type,
+          price: updatedProduct.price,
+          details: updatedProduct.details,
+          rating: updatedProduct.rating,
+          img: updatedProduct.img
+        }
+      }
+      const result = await productCollection.updateOne(query, product, options);
+      res.send(result);
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
