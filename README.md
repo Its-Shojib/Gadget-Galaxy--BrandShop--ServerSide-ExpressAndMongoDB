@@ -2,7 +2,7 @@
 
 
 # Live Link: 
-   **https://gadget-galaxy-8b55a.web.app/**
+   **https://gadget-galaxy-8b55a.web.app**
 # The Features are:
 
 * **Full-Stack Project:** This Project is full-stack Project.
